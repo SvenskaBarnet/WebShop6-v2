@@ -35,6 +35,7 @@ do
                 break;
 
             case 1: //login 
+                LoginMenu.Login();
                 break;
 
             case 2: //registrera kund
