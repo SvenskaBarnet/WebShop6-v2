@@ -1,4 +1,6 @@
-﻿namespace WebShop6_v2;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebShop6_v2;
 
 public class CustomerManagement
 {
@@ -20,26 +22,72 @@ public class CustomerManagement
         {
             switch (choice)
             {
-                case 0:
+                case 0:     //Exit
                     return;
-                case 1:
+                case 1:     //Remove Customer
+                    RemoveCustomer();
                     break;
-                case 2:
+                case 2:     //Edit Username
                     break;
-                case 3:
+                case 3:     //Edit Password
                     break;
-                default:
+                default:    //Invalid input
                     Console.WriteLine("Invalid input");
                     Menu();
                     break;
 
             }
         }
-        else
+        else    //Invalid input
         {
             Console.WriteLine("Invalid input");
             Thread.Sleep(1000);
             Menu();
         }
+    }
+
+    private static void RemoveCustomer()
+    {
+        CustomerList();
+        Console.WriteLine("\n\nWrite the username of the customer you want to remove or leave blank to return to previous menu.");
+        string input = Utils.Promt("\nUsername: ");
+        if (input.Equals(string.Empty))
+        {
+           Menu();
+        }
+        List<string> userList = new List<string>();
+        string[] users = File.ReadAllLines("users.csv");
+        foreach (string user in users)
+        {
+            string[] info = user.Split(',');
+            if (info[0].Equals(input))
+            {
+                Console.WriteLine("\nUsername does not exist, try again");
+                Thread.Sleep(1000);
+                RemoveCustomer();
+            }
+            else
+            {
+                userList.Add(user);
+            }
+        }
+        File.WriteAllLines("users.csv", userList);
+        Menu();
+        return;
+    }
+    private static void CustomerList()
+    {
+        Console.Clear();
+        Console.WriteLine("Registred Customers\n\n");
+        string[] users = File.ReadAllLines("users.csv");
+        foreach (string user in users)
+        {
+            string[] info = user.Split(',');
+            if (info[2] is "Customer")
+            {
+                Console.WriteLine(info[0]);
+            }
+        }
+        Console.WriteLine();
     }
 }
