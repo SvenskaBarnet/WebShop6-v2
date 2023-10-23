@@ -4,16 +4,16 @@ namespace WebShop6_v2;
 
 public class CustomerManagement
 {
-    static void Menu()
+    public static void Menu()
     {
         Console.Clear();
         Console.WriteLine($"******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
-        Console.WriteLine("Customer Account Management");
-        Console.WriteLine(" 1. Remove Customer\n");
-        Console.WriteLine(" 2. Edit username\n");
-        Console.WriteLine(" 3. Edit Password\n");
-        Console.WriteLine(" 0. Exit\n");
+        Console.WriteLine("Customer Account Management\n");
+        Console.WriteLine(" 1. Remove Customer");
+        Console.WriteLine(" 2. Edit username");
+        Console.WriteLine(" 3. Edit Password");
+        Console.WriteLine(" 0. Exit");
         Console.WriteLine($"******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
 
@@ -62,9 +62,16 @@ public class CustomerManagement
             string[] info = user.Split(',');
             if (info[0].Equals(input))
             {
-                Console.WriteLine("\nUsername does not exist, try again");
-                Thread.Sleep(1000);
-                RemoveCustomer();
+                Console.WriteLine($"\nAre you sure you want to remove {info[0]}? (y/n)");
+                if(Console.ReadKey(true).Equals(ConsoleKey.N))
+                {
+                    RemoveCustomer();
+                }
+                else
+                {
+                    Console.WriteLine($"\n{info[0]} has been removed");
+                    Thread.Sleep(1000);
+                }
             }
             else
             {
@@ -72,20 +79,33 @@ public class CustomerManagement
             }
         }
         File.WriteAllLines("users.csv", userList);
+
         Menu();
         return;
     }
+
+
     private static void CustomerList()
     {
         Console.Clear();
-        Console.WriteLine("Registred Customers\n\n");
+        Console.WriteLine("Registered Customers\n\n");
         string[] users = File.ReadAllLines("users.csv");
         foreach (string user in users)
         {
             string[] info = user.Split(',');
-            if (info[2] is "Customer")
+            if (Enum.TryParse(info[2], out Role role))
             {
-                Console.WriteLine(info[0]);
+                if (role.Equals(Role.Customer))
+                {
+                    Console.Write("Customer: ");
+                    Console.WriteLine(info[0]);
+                }
+            }
+            else
+            {
+                Console.WriteLine("Failed to parse something");
+                Thread.Sleep(1000);
+                return;
             }
         }
         Console.WriteLine();
