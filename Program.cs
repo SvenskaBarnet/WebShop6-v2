@@ -14,7 +14,7 @@ while (true)
     Console.WriteLine($"****************************************************************** \n");
 
     bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
-
+    IUser? user = null;
     if (isSucceed)
     {
         switch (choice)
@@ -33,7 +33,15 @@ while (true)
                 break;
 
             case 1: //login 
-                LoginMenu.Login();
+                user = LoginMenu.Login();
+                if (user is Customer customer)
+                {
+                    CustomerMenu.Main(customer.Username);
+                }
+                else if (user is Admin admin)
+                {
+                    AdminMenu.Main(admin.Username);
+                }
                 continue;
 
             case 2: //registrera kund
