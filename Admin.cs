@@ -1,5 +1,3 @@
 ﻿namespace WebShop6_v2;
 
-public class Admin
-{
-}
+public record Admin(string Username) : IUser;

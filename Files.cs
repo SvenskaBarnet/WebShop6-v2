@@ -10,7 +10,7 @@ public class Files
         }
         if (!File.Exists("users.csv"))
         {
-            File.AppendAllText("users.csv", "Admin,Password123,Admin"); //User(Username,Password,Role)    
+            File.AppendAllText("users.csv", $"Admin,Password123,Admin{Environment.NewLine}"); //User(Username,Password,Role)    
         }
         Directory.CreateDirectory("Orders");
         Directory.CreateDirectory("Carts");
