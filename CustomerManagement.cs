@@ -53,7 +53,7 @@ public class CustomerManagement
         string input = Utils.Promt("\nUsername: ");
         if (input.Equals(string.Empty))
         {
-           Menu();
+            return;
         }
         List<string> userList = new List<string>();
         string[] users = File.ReadAllLines("users.csv");
@@ -62,16 +62,29 @@ public class CustomerManagement
             string[] info = user.Split(',');
             if (info[0].Equals(input))
             {
-                Console.WriteLine($"\nAre you sure you want to remove {info[0]}? (y/n)");
-                if(Console.ReadKey(true).Equals(ConsoleKey.N))
+                bool valid;
+                do
                 {
-                    RemoveCustomer();
-                }
-                else
-                {
-                    Console.WriteLine($"\n{info[0]} has been removed");
-                    Thread.Sleep(1000);
-                }
+                    valid = true;
+                    Console.WriteLine($"\nAre you sure you want to remove {info[0]}? (y/n)");
+                    string choice = Console.ReadLine() ?? string.Empty;
+
+                    if (choice.Equals("n"))
+                    {
+                        RemoveCustomer();
+                        return;
+                    }
+                    else if (choice.Equals("y"))
+                    {
+                        Console.WriteLine($"\n{info[0]} has been removed");
+                        Thread.Sleep(1000);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid input, try again");
+                        valid = false;
+                    }
+                } while (!valid);
             }
             else
             {
@@ -79,11 +92,9 @@ public class CustomerManagement
             }
         }
         File.WriteAllLines("users.csv", userList);
-
-        Menu();
+        RemoveCustomer();
         return;
     }
-
 
     private static void CustomerList()
     {
