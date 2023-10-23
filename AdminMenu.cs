@@ -2,7 +2,7 @@
 
 public class AdminMenu
 {
-    public static void Menu(string username)
+    public static void Main(string username)
     {
         Console.Clear();
         Console.WriteLine($"******************************************************************");
@@ -25,18 +25,18 @@ public class AdminMenu
                     return;
 
                 case 1: //Manage Customer Info
-                    Menu(username);
+                    Main(username);
                     break;
 
 
                 case 3: //Manage Orders
-                    Menu(username);
+                    Main(username);
                     break;
 
                 default: //ogiltig siffra matas in
                     Console.WriteLine(" Invalid choice. Try again!");
                     Thread.Sleep(1000);
-                    Menu(username);
+                    Main(username);
                     break;
             }
         }
@@ -44,7 +44,7 @@ public class AdminMenu
         {
             Console.WriteLine("Invalid input. Try again!");
             Thread.Sleep(1000);
-            Menu(username);
+            Main(username);
         }
 
     }

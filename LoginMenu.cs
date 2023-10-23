@@ -120,7 +120,7 @@ public class LoginMenu
     public static List<Product> LoadCart(string username)
     {
         List<Product> cart = new List<Product>();
-        string[] savedCart = File.ReadAllLines($"Carts/{username}");
+        string[] savedCart = File.ReadAllLines($"Carts/{username}.csv");
         foreach (string product in savedCart)
         {
             cart.Add(new Product(product));
