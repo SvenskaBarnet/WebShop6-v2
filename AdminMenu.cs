@@ -29,6 +29,8 @@ public class AdminMenu
                     Main(username);
                     break;
 
+                case 2: //Manage products
+                    break;
 
                 case 3: //Manage Orders
                     Main(username);
