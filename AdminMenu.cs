@@ -8,7 +8,7 @@ public class AdminMenu
         Console.WriteLine($"******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
         Console.WriteLine(username + "! WELCOME to: The Admin menu\n");
-        Console.WriteLine(" 1. Manage Customer Info\n");
+        Console.WriteLine(" 1. Manage Customer Info");
         Console.WriteLine(" 2. Manage Products");
         Console.WriteLine(" 3. Manage Orders");
         Console.WriteLine(" 0. Log out");
