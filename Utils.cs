@@ -8,5 +8,4 @@ public class Utils
         string input = Console.ReadLine() ?? string.Empty;
         return input;
     }
-
 }
