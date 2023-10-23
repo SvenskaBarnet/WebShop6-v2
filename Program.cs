@@ -33,10 +33,11 @@ while (true)
                 break;
 
             case 1: //login 
+                LoginMenu.Login();
                 continue;
 
             case 2: //registrera kund
-                Login.Register();
+                LoginMenu.Register();
                 continue;
 
             default: //ogiltig siffra matas in
