@@ -1,114 +1,142 @@
 ﻿using System;
-namespace WebShop6_v2
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+class order
 {
-    using System;
-    using System.Diagnostics;
-    using System.Xml.Linq;
-    using System.Collections.Generic;
+    static List<Product> products = new List<Product>();
+    static List<Order> orders = new List<Order>();
 
-
-
-    public class Products
-
+    static void Main()
     {
 
-        public int Product { get; }
-        public string Name { get; }
-        public double Price { get; }
+        // läs in produkter fråm fil
+      File.ReadAllText("inventory.csv"); 
 
-        public Products(int Products, string name, int price)
+        while (true)
         {
-            Products = Products;
-            Name = name;
-            Price = price;
+            Console.WriteLine("1. View Purchase History");
+            Console.WriteLine("2. View Product List");
+            Console.WriteLine("3. Place an Order");
+            
+
+            int choice = GetChoice();
+
+            switch (choice)
+            {
+                case 1:
+                    ViewPurchaseHistory();
+                    break;
+                case 2:
+                    DisplayProductList();
+                    break;
+                case 3:
+                    PlaceOrder();
+                    break;
+                        default:
+                    Console.WriteLine("Invalid, try again.");
+                    break;
+            }
+        }
+    }
+
+    static int GetChoice()
+    {
+        int choice;
+        while (!int.TryParse(Console.ReadLine(), out choice))
+        {
+            Console.WriteLine("Invalid, please choose correct.");
+        }
+        return choice;
+    }
+
+    static void LoadProductsFromFile(string fileName)
+    {
+        if (File.Exists(fileName))
+        {
+            
+            string[] lines = File.ReadAllLines(fileName);
+            foreach (string line in lines.Skip(3))
+            {
+                string[] parts = line.Split(',');
+                if (parts.Length == 3 && int.TryParse(parts[0], out int id) && int.TryParse(parts[2], out int price))
+                {
+                    products.Add(new Product(id, parts[1], price));
+                }
+            }
+        }
+    }
+
+    static void DisplayProductList()
+    {
+        Console.WriteLine("Product List");
+        foreach (var product in products)
+        {
+            Console.WriteLine($"{product.Id}. {product.Name} - ${product.Price}");
+        }
+    }
+
+    static void ViewPurchaseHistory()
+    {
+        Console.WriteLine("Purchase History");
+        foreach (var order in orders)
+        {
+            Console.WriteLine($"Product: {order.Product.Name}");
+            Console.WriteLine($"Quantity: {order.Quantity}");
+            Console.WriteLine($"Total Amount: ${order.TotalAmount}");
+            Console.WriteLine();
+        }
+    }
+
+    static void PlaceOrder()
+    {
+        DisplayProductList();
+        Console.Write("Enter product ID ");
+        int productId = GetChoice();
+
+        Product selectedProduct = products.FirstOrDefault(p => p.Id == productId);
+
+       if (selectedProduct == null)
+        {
+            Console.WriteLine("Invalid product ID.");
+            return;
         }
 
+        
 
+        int totalAmount = selectedProduct.Price;
+        Console.WriteLine($"Total Amount: ${totalAmount}");
 
-        public class Order
-        {
+        orders.Add(new Order(selectedProduct, totalAmount));
+        Console.WriteLine("Order placed successfully!");
+    }
+}
 
-            static List<Products> products = new List<Products>();
-            static List<Order> orders = new List<Order>();
-            static int orderIdcounter = 1;
+class Product
+{
+    public int Id { get; }
+    public string Name { get; }
+    public int Price { get; }
 
+    public Product(int id, string name, int price)
+    {
+        Id = id;
+        Name = name;
+        Price = price;
+    }
+}
 
-            static void Main()
-            {
-                // lägga in produkter
+class Order
+{
+    public Product Product { get; }
+    public int Quantity { get; }
+    public int TotalAmount { get; }
 
-
-                products.Add(new Products(1, "Test", 10));
-                products.Add(new Products(2, "Name", 50));
-                products.Add(new Products(3, "Catears", 100));
-
-
-
-
-
-                {
-
-                    Console.WriteLine("1, View Order History");
-                    Console.WriteLine("2, Order");
-                    Console.WriteLine("3, Product List");
-
-
-
-
-                    static string GetChoice(int choice)
-                    {
-
-                        string choose;
-
-                        switch (choice)
-                        {
-                            case 1:
-                                choose = "View Order History";
-                                break;
-                            case 2:
-                                choose = "Order";
-                                break;
-                            case 3:
-
-                                choose = "Product List";
-
-                                choose = "Productss List";
-
-                                break;
-                            default:
-                                choose = " Invalid Choice";
-                                break;
-
-
-                        }
-                        return choose;
-                    }
-
-
-                    static int choose()
-                    {
-
-                        int choose;
-
-
-
-                    }
-
-
-                    {
-
-
-
-
-
-                    }
-                }
-
-
-
-
-
-
-
-
-
+    public Order(Product product, int quantity, int totalAmount)
+    {
+        Product = product;
+        Quantity = quantity;
+        TotalAmount = totalAmount;
+    }
+}
