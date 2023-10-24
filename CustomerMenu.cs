@@ -2,13 +2,13 @@
 
 public class CustomerMenu
 {
-    public static void Main(string username)
+    public static void Main(Customer customer)
     {
 
         Console.Clear();
         Console.WriteLine($"******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
-        Console.WriteLine(username + "! WELCOME to: The Customer menu\n");
+        Console.WriteLine(customer.Username + "! WELCOME to: The Customer menu\n");
         Console.WriteLine(" 1. Product List");
         Console.WriteLine(" 2. Order History\n");
         Console.WriteLine(" 3. Shopping Basket\n");
@@ -28,6 +28,8 @@ public class CustomerMenu
                     break;
 
                 case 2: //Order History
+                    OrderHistory.View(customer);
+                    Main(customer);
                     break;
 
                 case 3: //Shopping Basket
@@ -36,7 +38,7 @@ public class CustomerMenu
                 default: //ogiltig siffra matas in
                     Console.WriteLine(" Invalid choice. Try again!");
                     Thread.Sleep(1000);
-                    Main(username);
+                    Main(customer);
                     break;
             }
         }
@@ -44,7 +46,7 @@ public class CustomerMenu
         {
             Console.WriteLine("Invalid input. Try again!");
             Thread.Sleep(1000);
-            Main(username);
+            Main(customer);
         }
     }
 }
