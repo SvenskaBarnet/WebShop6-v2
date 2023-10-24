@@ -11,10 +11,10 @@ public class CustomerManagement
         Console.WriteLine($"****************************************************************** \n");
         Console.WriteLine("Customer Account Management\n");
         Console.WriteLine(" 1. Remove Customer");
-        Console.WriteLine(" 2. Edit username");
+        Console.WriteLine(" 2. Edit Username");
         Console.WriteLine(" 3. Edit Password");
         Console.WriteLine(" 0. Exit");
-        Console.WriteLine($"******************************************************************");
+        Console.WriteLine($"\n******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
 
         bool validInput = int.TryParse(Console.ReadLine(), out int choice);
@@ -26,8 +26,11 @@ public class CustomerManagement
                     return;
                 case 1:     //Remove Customer
                     RemoveCustomer();
+                    Menu();
                     break;
                 case 2:     //Edit Username
+                    EditUsername();
+                    Menu();
                     break;
                 case 3:     //Edit Password
                     break;
@@ -93,6 +96,60 @@ public class CustomerManagement
         }
         File.WriteAllLines("users.csv", userList);
         RemoveCustomer();
+        return;
+    }
+
+    private static void EditUsername()
+    {
+        CustomerList();
+        Console.WriteLine("Write the username of the customer whose username you want to edit or leave blank to return to previous menu");
+        string input = Utils.Promt("Username: ");
+        string? newUsername;
+        if (input.Equals(string.Empty))
+        {
+            return;
+        }
+        List<string> userList = new List<string>();
+        string[] users = File.ReadAllLines("users.csv");
+        foreach (string user in users)
+        {
+            string[] info = user.Split(',');
+            if (info[0].Equals(input))
+            {
+                newUsername = Utils.Promt("\nNew Username (4-12 characters): ");
+                if (newUsername.Length is > 3 and < 13)
+                {
+                    foreach (string line in users)
+                    {
+                        string[] data = line.Split(',');
+                        if (data[0].Equals(newUsername))
+                        {
+                            Console.WriteLine("\nUsername already exists");
+                            Thread.Sleep(1000);
+                            EditUsername();
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid username length");
+                    Thread.Sleep(1000);
+                    EditUsername();
+                    return;
+                }
+                Console.WriteLine($"Changing username from {info[0]} to {newUsername}");
+                info[0] = newUsername;
+                userList.Add($"{info[0]},{info[1]},{info[2]}");
+                Thread.Sleep(1000);
+            }
+            else
+            {
+                userList.Add(user);
+            }
+        }
+        File.WriteAllLines("users.csv", userList);
+        EditUsername();
         return;
     }
 

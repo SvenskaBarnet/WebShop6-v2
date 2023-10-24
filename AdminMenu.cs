@@ -12,7 +12,7 @@ public class AdminMenu
         Console.WriteLine(" 2. Manage Products");
         Console.WriteLine(" 3. Manage Orders");
         Console.WriteLine(" 0. Log out");
-        Console.WriteLine($"******************************************************************");
+        Console.WriteLine($"\n******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
 
         bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
