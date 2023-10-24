@@ -1,10 +1,8 @@
 ﻿using WebShop6_v2;
 
 Files.Setup();
-bool exit;
-do
+while (true)
 {
-    exit = false;
     Console.Clear();
     Console.WriteLine($"******************************************************************");
     Console.WriteLine($"****************************************************************** \n");
@@ -16,7 +14,7 @@ do
     Console.WriteLine($"****************************************************************** \n");
 
     bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
-
+    IUser? user = null;
     if (isSucceed)
     {
         switch (choice)
@@ -35,22 +33,31 @@ do
                 break;
 
             case 1: //login 
-                break;
+                user = LoginMenu.Login();
+                if (user is Customer customer)
+                {
+                    CustomerMenu.Main(customer.Username);
+                }
+                else if (user is Admin admin)
+                {
+                    AdminMenu.Main(admin.Username);
+                }
+                continue;
 
             case 2: //registrera kund
-                break;
+                LoginMenu.Register();
+                continue;
 
             default: //ogiltig siffra matas in
                 Console.WriteLine(" Invalid choice. Try again!");
                 Thread.Sleep(1000);
-                exit = true;
-                break;
+                continue;
         }
     }
     else //ogiltig symbol matas in
     {
         Console.WriteLine("Invalid input. Try again!");
         Thread.Sleep(1000);
-        exit = true;
+        continue;
     }
-} while (exit);
+}
