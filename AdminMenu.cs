@@ -8,11 +8,11 @@ public class AdminMenu
         Console.WriteLine($"******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
         Console.WriteLine(username + "! WELCOME to: The Admin menu\n");
-        Console.WriteLine(" 1. Manage Customer Info ");
-        Console.WriteLine(" 2. Manage Products\n");
-        Console.WriteLine(" 3. Manage Orders\n");
-        Console.WriteLine(" 0. Log out\n");
-        Console.WriteLine($"******************************************************************");
+        Console.WriteLine(" 1. Manage Customer Info");
+        Console.WriteLine(" 2. Manage Products");
+        Console.WriteLine(" 3. Manage Orders");
+        Console.WriteLine(" 0. Log out");
+        Console.WriteLine($"\n******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
 
         bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
@@ -25,9 +25,12 @@ public class AdminMenu
                     return;
 
                 case 1: //Manage Customer Info
+                    CustomerManagement.Menu();
                     Main(username);
                     break;
 
+                case 2: //Manage products
+                    break;
 
                 case 2: //Manage Products
                     Console.Clear();

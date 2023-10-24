@@ -48,7 +48,7 @@ public class LoginMenu
                     }
                     else if (passwordCheck.Equals(password))
                     {
-                        File.AppendAllText("users.csv", $"{username},{password},Customer{Environment.NewLine}");
+                        File.AppendAllText("users.csv", $"{username},{password},{Role.Customer}{Environment.NewLine}");
                         File.Create($"Carts/{username}.csv").Close();
                         return;
                     }
