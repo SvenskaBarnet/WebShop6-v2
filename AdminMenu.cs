@@ -45,15 +45,15 @@ public class AdminMenu
                         {
 
                             case 1: //add product
-                                addProduct();
+                                ProductManagement.addProduct();
                                 break;
 
                             case 2: //remove product
-                                removeProduct();
+                                ProductManagement.removeProduct();
                                 break;
 
                             case 3: //Edit product WIP
-                                editProduct();
+                                ProductManagement.editProduct();
                                 break;
 
 
@@ -87,75 +87,4 @@ public class AdminMenu
 
     }
 
-    public static void addProduct()
-    {
-        string newItemName, newItemPrice;
-        Console.Clear();
-
-        Console.WriteLine("Add a new product");
-        Console.WriteLine("Name of product:");
-        newItemName = Console.ReadLine();
-
-        Console.Clear();
-
-        Console.WriteLine("Price of product:");
-        newItemPrice = Console.ReadLine();
-
-        string[] products = File.ReadAllLines("inventory.csv");
-
-        string[] nameAndPrice = { newItemName + "," + newItemPrice };
-        File.AppendAllLines("inventory.csv", nameAndPrice);
-
-        Console.Clear();
-    }
-
-    public static void removeProduct()
-    {
-
-        string[] productsList = File.ReadAllLines("inventory.csv");
-
-        Console.Clear();
-
-        foreach (string product in productsList)
-        {
-            Console.WriteLine(product);
-        }
-
-        Console.WriteLine("Choose a product to remove");
-
-        bool remChoice = int.TryParse(Console.ReadLine(), out int Remove);
-        Remove = Remove - 1;
-
-        List<string> list = File.ReadAllLines("inventory.csv").ToList();
-        string itemRem = list[Remove];
-        list.RemoveAt(Remove);
-        File.WriteAllLines("inventory.csv", list.ToArray());
-    }
-
-    public static void editProduct()
-    {
-        string editItem;
-        string[] productsListEdit = File.ReadAllLines("inventory.csv");
-
-        Console.Clear();
-
-        foreach (string product in productsListEdit)
-        {
-            Console.WriteLine(product);
-        }
-
-        Console.WriteLine("Choose a product to edit");
-        bool editChoice = int.TryParse(Console.ReadLine(), out int Edit);
-        Edit = Edit - 1;
-
-        List<string> editList = File.ReadAllLines("inventory.csv").ToList();
-        string itemEdit = editList[Edit];
-
-        Console.WriteLine("The items new name and price:");
-        editItem = Console.ReadLine();
-
-        editList[Edit] = editItem;
-        File.WriteAllLines("inventory.csv", editList.ToArray());
-
-    }
 }
