@@ -20,14 +20,14 @@ public class Files
     static void CreateInventory()
     {
             List<string> inventory = new List<string>();
-            inventory.Add("Time - Traveling Cat Condo, 2500, A space - themed cat condo designed like a time machine.Complete with comfortable sleeping quarters.");
+            inventory.Add("Time - Traveling Cat Condo,2500, A space - themed cat condo designed like a time machine.Complete with comfortable sleeping quarters.");
             inventory.Add("Cat-Proofed Time Machine Collar,1250,A special collar that allows cats to time travel safely with built-in GPS tracking.");
             inventory.Add("Temporal Catnip Balls,850,Cat toys filled with 'time-altering' catnip to keep your furry friend entertained.");
             inventory.Add("Steampunk Cat Goggles,4500,Goggles with a steampunk twist to protect your cat's eyes during time jumps.");
             inventory.Add("Quantum Litter Box,975,A futuristic litter box that instantly cleans itself using quantum technology.");
             inventory.Add("Time-Traveling Cat Bed,345,A cozy cat bed with a design that resembles a vintage time-traveling capsule.");
             inventory.Add("Time-Warping Laser Pointer,3250,A laser pointer that creates mesmerizing time-warping patterns to chase.");
-            inventory.Add("Time - Traveling Catnip Mouse, 175, A plush toy shaped like a mouse.Filled with catnip.Equipped with a miniature time machine.");
+            inventory.Add("Time - Traveling Catnip Mouse,175, A plush toy shaped like a mouse.Filled with catnip.Equipped with a miniature time machine.");
             inventory.Add("Retro Futurist Cat Carrier,645,A stylish and comfortable carrier for time-traveling adventuresn");
             inventory.Add("Dimension-Hopping Cat Tree,1200,A multi-level cat tree with platforms and tunnels that resemble portals to different eras.");
             inventory.Add("Chrono-Collar Camera,4500,A collar-mounted camera that captures your cat's time-traveling escapades.");
