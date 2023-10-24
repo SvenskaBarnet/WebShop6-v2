@@ -56,15 +56,17 @@ class order
         if (File.Exists(fileName))
         {
             
-            string[] lines = File.ReadAllLines(fileName);
-            foreach (string line in lines.Skip(3))
+            string[] lines = File.ReadAllLines("inventory.csv");
+            for (int i = 0; i< lines.Length; i++)
             {
-                string[] parts = line.Split(',');
-                if (parts.Length == 3 && int.TryParse(parts[0], out int id) && int.TryParse(parts[2], out int price))
+                string[] parts = lines[i].Split(",");
+                if (int.TryParse(parts[1], out int price))
                 {
-                    products.Add(new Product(id, parts[1], price));
+                    products.Add(new Product(i, parts[0], price));
+
                 }
-            }
+
+            }  
         }
     }
 
@@ -85,12 +87,14 @@ class order
             Console.WriteLine($"Product: {order.Product.Name}");
             Console.WriteLine($"Quantity: {order.Quantity}");
             Console.WriteLine($"Total Amount: ${order.TotalAmount}");
-            Console.WriteLine();
+            
         }
     }
 
     static void PlaceOrder()
     {
+
+
         DisplayProductList();
         Console.Write("Enter product ID ");
         int productId = GetChoice();
@@ -112,7 +116,7 @@ class order
         Console.WriteLine("Order placed successfully!");
     }
 }
-
+// kom ihåg blir dubbelt
 class Product
 {
     public int Id { get; }

@@ -29,9 +29,6 @@ public class AdminMenu
                     Main(username);
                     break;
 
-                case 2: //Manage products
-                    break;
-
                 case 2: //Manage Products
                     Console.Clear();
                     Console.WriteLine("1. Add Product");
