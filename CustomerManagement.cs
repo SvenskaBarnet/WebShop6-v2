@@ -33,6 +33,8 @@ public class CustomerManagement
                     Menu();
                     break;
                 case 3:     //Edit Password
+                    EditPassword();
+                    Menu();
                     break;
                 default:    //Invalid input
                     Console.WriteLine("Invalid input");
@@ -48,7 +50,6 @@ public class CustomerManagement
             Menu();
         }
     }
-
     private static void RemoveCustomer()
     {
         CustomerList();
@@ -102,7 +103,7 @@ public class CustomerManagement
     private static void EditUsername()
     {
         CustomerList();
-        Console.WriteLine("Write the username of the customer whose username you want to edit or leave blank to return to previous menu");
+        Console.WriteLine("\nWrite the username of the customer whose username you want to edit or leave blank to return to previous menu\n");
         string input = Utils.Promt("Username: ");
         string? newUsername;
         if (input.Equals(string.Empty))
@@ -133,12 +134,12 @@ public class CustomerManagement
                 }
                 else
                 {
-                    Console.WriteLine("Invalid username length");
+                    Console.WriteLine("\nInvalid username length");
                     Thread.Sleep(1000);
                     EditUsername();
                     return;
                 }
-                Console.WriteLine($"Changing username from {info[0]} to {newUsername}");
+                Console.WriteLine($"\nChanging username from {info[0]} to {newUsername}");
                 info[0] = newUsername;
                 userList.Add($"{info[0]},{info[1]},{info[2]}");
                 Thread.Sleep(1000);
@@ -153,6 +154,58 @@ public class CustomerManagement
         return;
     }
 
+    private static void EditPassword()
+    {
+        CustomerList();
+        Console.WriteLine("\nWrite the username of the customer whose password you want to edit or leave blank to return to previous menu\n");
+        string input = Utils.Promt("Username: ");
+        string? newPassword;
+        if (input.Equals(string.Empty))
+        {
+            return;
+        }
+        List<string> userList = new List<string>();
+        string[] users = File.ReadAllLines("users.csv");
+        foreach (string user in users)
+        {
+            string[] info = user.Split(',');
+            if (info[0].Equals(input))
+            {
+                newPassword = Utils.Promt("\nNew Password (minimum of 8 characters): ");
+                if (newPassword.Length is > 7)
+                {
+                    if (info[1].Equals(newPassword))
+                    {
+                        Console.WriteLine("\nNew password can't be old password.");
+                        Thread.Sleep(1000);
+                        EditPassword();
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"\nChanging password to {newPassword}");
+                        info[1] = newPassword;
+                        userList.Add($"{info[0]},{info[1]},{info[2]}");
+                        Thread.Sleep(2000);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("\nInvalid username length");
+                    Thread.Sleep(1000);
+                    EditPassword();
+                    return;
+                }
+            }
+            else
+            {
+                userList.Add(user);
+            }
+        }
+        File.WriteAllLines("users.csv", userList);
+        EditPassword();
+        return;
+    }
     private static void CustomerList()
     {
         Console.Clear();
