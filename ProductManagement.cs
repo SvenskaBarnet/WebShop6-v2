@@ -9,7 +9,6 @@ namespace WebShop6_v2
 {
     internal class ProductManagement
     {
-        
         public static void addProduct()
         {
             string newItemName, newItemPrice, newItemDesc;
@@ -40,13 +39,16 @@ namespace WebShop6_v2
 
         public static void removeProduct()
         {
+            int num = 0;
             string[] productsList = File.ReadAllLines("inventory.csv");
             Console.Clear();
             
             foreach (string product in productsList)
             {
+                num = num + 1;
                 string[] products = product.Split(',');
-                Console.WriteLine(products[0] + " " + products[1]);
+                Console.WriteLine(num + " " + products[0] + " " + products[1]);
+
             }
 
             Console.WriteLine("Write the number corresponding with the item you want to remove");
@@ -63,14 +65,16 @@ namespace WebShop6_v2
         public static void editProduct()
         {
             string editItem, newName, newPrice, newDesc;
+            int num = 0;
             string[] productsListEdit = File.ReadAllLines("inventory.csv");
 
             Console.Clear();
 
             foreach (string product in productsListEdit)
             {
+                num = num + 1;
                 string[] products = product.Split(',');
-                Console.WriteLine(products[0] + " " + products[1]);
+                Console.WriteLine(num + " " + products[0] + " " + products[1]);
             }
 
             Console.WriteLine("Write the number corresponding with the item you want to edit");
@@ -80,14 +84,19 @@ namespace WebShop6_v2
             List<string> editList = File.ReadAllLines("inventory.csv").ToList();
             string itemEdit = editList[Edit];
 
+            Console.Clear();
+
+            Console.WriteLine(itemEdit);
             Console.WriteLine("Write the new name of the product");
             newName = Console.ReadLine();
             Console.Clear();
 
+            Console.WriteLine(itemEdit);
             Console.WriteLine("Write the new price of the product");
             newPrice = Console.ReadLine();
             Console.Clear();
 
+            Console.WriteLine(itemEdit);
             Console.WriteLine("Write the new description of the product");
             newDesc = Console.ReadLine();
             Console.Clear();
