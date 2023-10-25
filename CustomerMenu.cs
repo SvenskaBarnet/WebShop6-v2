@@ -1,4 +1,7 @@
-﻿namespace WebShop6_v2;
+﻿using System;
+using WebShop6_v2;
+namespace WebShop6_v2;
+
 
 public class CustomerMenu
 {
@@ -31,6 +34,7 @@ public class CustomerMenu
                     break;
 
                 case 3: //Shopping Basket
+                    Cart.CartMenu();
                     break;
 
                 default: //ogiltig siffra matas in

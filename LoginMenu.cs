@@ -2,6 +2,7 @@
 
 public class LoginMenu
 {
+    public static string loggedInUsername { get; set; }
     public static void Register()
     {
         string? username;
@@ -63,6 +64,9 @@ public class LoginMenu
                     File.AppendAllText("users.csv", $"{username},{password},Customer{Environment.NewLine}");
                     File.Create($"Carts/{username}.csv").Close();
                     Directory.CreateDirectory($"Orders/{username}/");
+
+                    loggedInUsername = username;
+
                     return;
                 }
             }
@@ -97,6 +101,8 @@ public class LoginMenu
                             {
                                 if (Enum.TryParse(info[2], out Role role))
                                 {
+                                    loggedInUsername = info[0];
+
                                     switch (role)
                                     {
                                         case Role.Admin:
