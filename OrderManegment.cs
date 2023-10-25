@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Metadata;
@@ -19,8 +20,8 @@ namespace WebShop6_v2
             Console.WriteLine(username + "! WELCOME to: The Admin Order Management\n");
             Console.WriteLine(" 1. Manage Customers Orders");
             Console.WriteLine(" 2. Manage Customers Transactions");
-           // Console.WriteLine(" 3. See current $$$");
-            Console.WriteLine(" 0. Log out");
+            // Console.WriteLine(" 3. See current $$$");
+            Console.WriteLine(" 0. Go Back");
             Console.WriteLine($"\n******************************************************************");
             Console.WriteLine($"****************************************************************** \n");
             string tempchoice;
@@ -38,10 +39,18 @@ namespace WebShop6_v2
                         Console.WriteLine();
                         Console.Write("enter user: ");
                         tempchoice = Console.ReadLine();
-                        Console.WriteLine("");
-                        getUserCart(tempchoice);
-                        Console.ReadLine();
-
+                        if (userExist(tempchoice) == true)
+                        {
+                            Console.WriteLine("");
+                            getUserCart(tempchoice);
+                            Console.ReadLine();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong input... returning!");
+                            Thread.Sleep(500);
+                            Menu(username);
+                        }
                         Menu(username);
                         break;
                     case 2:
@@ -53,8 +62,17 @@ namespace WebShop6_v2
                         Console.WriteLine("\nChose a customer for see transaction history");
                         Console.Write("enter user: ");
                         tempchoice = Console.ReadLine();
-                        Console.WriteLine("");
-                        getReceipt(tempchoice);
+                        if (userExist(tempchoice) == true)
+                        {
+                            Console.WriteLine("");
+                            getReceipt(tempchoice);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong input... returning!");
+                            Thread.Sleep(500);
+                            Menu(username);
+                        }
                         Menu(username);
                         break;
                     case 3:
@@ -70,15 +88,19 @@ namespace WebShop6_v2
                         Console.WriteLine("wrong choice... returning");
                         Thread.Sleep(500);
                         Menu(username);
-                        
                         break;
                 }
-
+            }
+            else
+            {
+                Console.WriteLine("Wrong input returning");
+                Thread.Sleep(500);
+                Menu(username);
             }
 
         }
         public static void displayUsers()
-            {
+        {
             Console.WriteLine("------------------------------------------------------------------");
             Console.WriteLine("");
             Console.WriteLine("");
@@ -126,6 +148,7 @@ namespace WebShop6_v2
             Console.WriteLine($" - number of items: {count}\n");
             Console.WriteLine($" - total price:     {totalsum}$");
         }
+
         public static void getReceipt(string choice)
         {
             Console.Clear();
@@ -141,32 +164,36 @@ namespace WebShop6_v2
                 Console.WriteLine($"[ {i + 1} ] {fileEntries[i]}");
             }
             Console.Write($"\nWhat receipt do you want to checkout? (1 - {i}): ");
-            int tempchoice = Convert.ToInt32(Console.ReadLine());
-            string[] Receipt = File.ReadAllLines(fileEntries[tempchoice - 1]);
-            foreach (var item in Receipt)
+            if(int.TryParse(Console.ReadLine(), out int tempchoice) && tempchoice <= i )
             {
-                Console.WriteLine(item);
-            }
-            Console.ReadLine();
-        }
-        public static void userfileExist(string user)
-        {
-            bool userExist;
-            string[] fileCart = Directory.GetFiles($"Cart/{user}.csv");
-            foreach (var item in fileCart)
-            {
-                if(user==item)
+                string[] Receipt = File.ReadAllLines(fileEntries[tempchoice - 1]);
+                foreach (var item in Receipt)
                 {
-                    userExist = true;
-                    return;
+                    Console.WriteLine(item);
                 }
-                else
-                {
-                    Console.WriteLine("wrong user, try again");
-                    Menu(user);
-                }
-            }
+                Console.ReadLine();
 
+            }
+            else
+            {
+                Console.WriteLine("Wrong input... returning!");
+                Thread.Sleep(500);
+                return;
+            }
+        }
+        public static bool userExist(string input)
+        {
+            string[] userlist = File.ReadAllLines("users.csv");
+            foreach (var item in userlist)
+            {
+                string[] user = item.Split(",");
+                if (input == user[0])
+                return true;
+            }
+            return false;
         }
     }
 }
+
+    
+

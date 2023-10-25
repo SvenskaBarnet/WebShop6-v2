@@ -38,6 +38,7 @@ public class AdminMenu
                     break;
 
                 case 3: //Manage Orders
+                    OrderManegment.Menu(admin.Username);
                     Main(admin);
                     break;
 
