@@ -56,12 +56,9 @@ public class AdminMenu
                                 ProductManagement.editProduct();
                                 break;
 
-
                             case 4:
-
-                                Main(username);
+                                AdminMenu.Main(username);
                                 break;
-
                         }
                     }
 
