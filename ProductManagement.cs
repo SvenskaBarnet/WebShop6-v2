@@ -9,10 +9,52 @@ namespace WebShop6_v2
 {
     internal class ProductManagement
     {
+
+        public static void Menu()
+        {
+            Console.Clear();
+            Console.WriteLine($"******************************************************************");
+            Console.WriteLine($"****************************************************************** \n");
+            Console.WriteLine("1. Add Product");
+            Console.WriteLine("2. Remove Product");
+            Console.WriteLine("3. Edit Product");
+            Console.WriteLine("4. Back");
+            Console.WriteLine($"\n******************************************************************");
+            Console.WriteLine($"****************************************************************** \n");
+
+            bool addRemChoice = int.TryParse(Console.ReadLine(), out int addOrRemove);
+
+            if (addRemChoice)
+            {
+                switch (addOrRemove)
+                {
+
+                    case 1: //add product
+                        ProductManagement.addProduct();
+                        Menu();
+                        break;
+
+                    case 2: //remove product
+                        ProductManagement.removeProduct();
+                        Menu();
+                        break;
+
+                    case 3: //Edit product WIP
+                        ProductManagement.editProduct();
+                        Menu();
+                        break;
+
+                    case 4:
+                        return;
+                }
+            }
+        }
+
+
         public static void addProduct()
         {
-            string newItemName, newItemPrice, newItemDesc;
-
+            string newItemName, newItemDesc;
+            int newItemPrice;
             Console.Clear();
 
             Console.WriteLine("Add a new product");
@@ -22,8 +64,17 @@ namespace WebShop6_v2
             Console.Clear();
 
             Console.WriteLine("Write the price of the new product and press enter:");
-            newItemPrice = Console.ReadLine();
 
+            if (int.TryParse(Console.ReadLine(), out int newValue))
+            {
+                newItemPrice = newValue;
+            }
+            else
+            {
+                Console.WriteLine("Must be a number");
+                Thread.Sleep(1000);
+                return;
+            }
             Console.Clear();
 
             Console.WriteLine("Write the description of the new product and press enter:");
@@ -42,13 +93,12 @@ namespace WebShop6_v2
             int num = 0;
             string[] productsList = File.ReadAllLines("inventory.csv");
             Console.Clear();
-            
+
             foreach (string product in productsList)
             {
                 num = num + 1;
                 string[] products = product.Split(',');
                 Console.WriteLine(num + " " + products[0] + " " + products[1]);
-
             }
 
             Console.WriteLine("Write the number corresponding with the item you want to remove");
@@ -64,8 +114,9 @@ namespace WebShop6_v2
 
         public static void editProduct()
         {
-            string editItem, newName, newPrice, newDesc;
+            string editItem, newName, newDesc;
             int num = 0;
+            int newPrice;
             string[] productsListEdit = File.ReadAllLines("inventory.csv");
 
             Console.Clear();
@@ -93,7 +144,17 @@ namespace WebShop6_v2
 
             Console.WriteLine(itemEdit);
             Console.WriteLine("Write the new price of the product");
-            newPrice = Console.ReadLine();
+
+            if (int.TryParse(Console.ReadLine(), out int newValue))
+            {
+                newPrice = newValue;
+            }
+            else
+            {
+                Console.WriteLine("Must be a number");
+                Thread.Sleep(1000);
+                return;
+            }
             Console.Clear();
 
             Console.WriteLine(itemEdit);

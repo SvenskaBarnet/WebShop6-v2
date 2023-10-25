@@ -31,42 +31,9 @@ public class AdminMenu
                     break;
 
                 case 2: //Manage Products
-                    Console.Clear();
-                    Console.WriteLine($"******************************************************************");
-                    Console.WriteLine($"****************************************************************** \n");
-                    Console.WriteLine("1. Add Product");
-                    Console.WriteLine("2. Remove Product");
-                    Console.WriteLine("3. Edit Product");
-                    Console.WriteLine("4. Back");
-                    Console.WriteLine($"\n******************************************************************");
-                    Console.WriteLine($"****************************************************************** \n");
-
-                    bool addRemChoice = int.TryParse(Console.ReadLine(), out int addOrRemove);
-
-                    if (addRemChoice)
-                    {
-                        switch (addOrRemove)
-                        {
-
-                            case 1: //add product
-                                ProductManagement.addProduct();
-                                break;
-
-                            case 2: //remove product
-                                ProductManagement.removeProduct();
-                                break;
-
-                            case 3: //Edit product WIP
-                                ProductManagement.editProduct();
-                                break;
-
-                            case 4:
-                                AdminMenu.Main(username);
-                                break;
-                        }
-                    }
-
-                break;
+                    ProductManagement.Menu();
+                    Main(username);
+                    break;
 
                 case 3: //Manage Orders
                     Main(username);
