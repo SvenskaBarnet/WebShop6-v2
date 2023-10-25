@@ -17,9 +17,9 @@ namespace WebShop6_v2
             Console.WriteLine($"******************************************************************");
             Console.WriteLine($"****************************************************************** \n");
             Console.WriteLine(username + "! WELCOME to: The Admin Order Management\n");
-            Console.WriteLine(" 1. Manage Custumers Orders");
-            Console.WriteLine(" 2. Manage Custumers Transactions");
-            Console.WriteLine(" 3. See current $$$");
+            Console.WriteLine(" 1. Manage Customers Orders");
+            Console.WriteLine(" 2. Manage Customers Transactions");
+           // Console.WriteLine(" 3. See current $$$");
             Console.WriteLine(" 0. Log out");
             Console.WriteLine($"\n******************************************************************");
             Console.WriteLine($"****************************************************************** \n");
@@ -32,7 +32,7 @@ namespace WebShop6_v2
                     case 1:
                         Console.WriteLine($"******************************************************************");
                         Console.WriteLine($"****************************************************************** \n");
-                        Console.WriteLine("---                      Custermers                           ----");
+                        Console.WriteLine("---                      Customers                             ----");
                         Console.WriteLine("         For what user do you want to see ongoing order");
                         displayUsers();
                         Console.WriteLine();
@@ -40,26 +40,37 @@ namespace WebShop6_v2
                         tempchoice = Console.ReadLine();
                         Console.WriteLine("");
                         getUserCart(tempchoice);
+                        Console.ReadLine();
+
+                        Menu(username);
                         break;
                     case 2:
                         Console.WriteLine($"******************************************************************");
                         Console.WriteLine($"****************************************************************** \n");
-                        Console.WriteLine("---                      Custermers                           ----");
+                        Console.WriteLine("---                      Customers                             ----");
                         Console.WriteLine("         For what user do you want to see order history");
                         displayUsers();
-                        Console.WriteLine("Chose a custemer for see transaction history");
+                        Console.WriteLine("\nChose a customer for see transaction history");
                         Console.Write("enter user: ");
                         tempchoice = Console.ReadLine();
                         Console.WriteLine("");
                         getReceipt(tempchoice);
-
+                        Menu(username);
                         break;
                     case 3:
-                        Console.WriteLine("--- Custermers ----");
+                        Console.WriteLine("--- Customers ----");
                         displayUsers();
                         Console.WriteLine("$$$$");
                         Console.WriteLine("");
                         Console.ReadLine();
+                        break;
+                    case 0:
+                        return;
+                    default:
+                        Console.WriteLine("wrong choice... returning");
+                        Thread.Sleep(500);
+                        Menu(username);
+                        
                         break;
                 }
 
@@ -114,7 +125,6 @@ namespace WebShop6_v2
             Console.WriteLine("");
             Console.WriteLine($" - number of items: {count}\n");
             Console.WriteLine($" - total price:     {totalsum}$");
-            Console.ReadLine();
         }
         public static void getReceipt(string choice)
         {
@@ -138,6 +148,25 @@ namespace WebShop6_v2
                 Console.WriteLine(item);
             }
             Console.ReadLine();
+        }
+        public static void userfileExist(string user)
+        {
+            bool userExist;
+            string[] fileCart = Directory.GetFiles($"Cart/{user}.csv");
+            foreach (var item in fileCart)
+            {
+                if(user==item)
+                {
+                    userExist = true;
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("wrong user, try again");
+                    Menu(user);
+                }
+            }
+
         }
     }
 }
