@@ -5,7 +5,7 @@ Files.Setup();
 while (true)
 {
     Console.Clear();
-Inventory.Printer();
+    Inventory.Printer();
     Console.WriteLine($"******************************************************************");
     Console.WriteLine($"****************************************************************** \n");
     Console.WriteLine(" WELCOME to: The Time-travelling Feline Shop\n");

@@ -1,16 +1,24 @@
-﻿using System;
+﻿using System.Runtime.Remoting;
+using System;
+using WebShop6_v2;
 namespace WebShop6_v2;
 
 public static class Cart
 {
-    public static void ShowOrder()
+    public static void GetOrder()
     {
+        string[] savedCart = File.ReadAllLines($"Carts/{LoginMenu.CurrentCustomer}.csv");
 
     }
 
-    public static void GetOrder()
+    public static void ShowOrder()
     {
-                string[] savedCart = File.ReadAllLines($"Carts/{LoginMenu.loggedInUsername}.csv");
+        //Displayar innehållet av varukorgen
+        int nr = 1;
+        foreach (var item in Inventory.products)
+        {
+            Console.WriteLine($"{nr++}. {item.ProductName}, {item.ProductPrice};-");
+        }
 
     }
 
@@ -21,12 +29,6 @@ public static class Cart
 
     public static void EditCart()
     {
-        //Displayar innehållet av varukorgen
-        int nr = 1;
-        foreach (var item in Inventory.products)
-        {
-            Console.WriteLine($"{nr++}. {item.ProductName}, {item.ProductPrice};-");
-        }
 
     }
 
@@ -39,23 +41,23 @@ public static class Cart
     public static void CartMenu() //visa totala beställning
     {
         Console.Clear();
-        GetOrder();
+        //GetOrder();
         Console.WriteLine("1. Beställa");
         Console.WriteLine("2. Ta bort vara");
-        Console.WriteLine("0. Återvända");
+        Console.WriteLine("Återvända [ENTER]");
         var choice = Console.ReadLine();
         switch (choice)
         {
             case "1":
-
-            break;
+                ConfirmOrder();
+                break;
 
             case "2":
                 EditCart();
                 break;
 
             default://tillbaka menyval för kunden
-                //Customer.CustomerMenu(username);
+                CustomerMenu.Main(LoginMenu.CurrentCustomer);
                 break;
 
         }

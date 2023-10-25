@@ -7,6 +7,7 @@ public class Inventory
     public static List<Inventory> products = new List<Inventory>();
     public string ProductName { get; set; }
     public int ProductPrice { get; set; }
+    public string ProductInfo { get; set; }
 
     public static void Printer()
     {
@@ -23,7 +24,8 @@ public class Inventory
                 Inventory obj = new Inventory
                 {
                     ProductName = values[0],
-                    ProductPrice = int.Parse(values[1])
+                    ProductPrice = int.Parse(values[1]),
+                    ProductInfo = values[2],
                 };
                 products.Add(obj);
             }
