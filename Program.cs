@@ -40,7 +40,7 @@ while (true)
                 }
                 else if (user is Admin admin)
                 {
-                    AdminMenu.Main(admin.Username);
+                    AdminMenu.Main(admin);
                 }
                 continue;
 
