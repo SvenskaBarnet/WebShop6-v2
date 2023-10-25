@@ -41,7 +41,7 @@ public class CustomerMenu
             }
         }
         else //ogiltig symbol matas in
-        { aff
+        { 
             Console.WriteLine("Invalid input. Try again!");
             Thread.Sleep(1000);
             Main(customer);
