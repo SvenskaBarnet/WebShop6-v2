@@ -32,10 +32,14 @@ public class AdminMenu
 
                 case 2: //Manage Products
                     Console.Clear();
+                    Console.WriteLine($"******************************************************************");
+                    Console.WriteLine($"****************************************************************** \n");
                     Console.WriteLine("1. Add Product");
                     Console.WriteLine("2. Remove Product");
                     Console.WriteLine("3. Edit Product");
                     Console.WriteLine("4. Back");
+                    Console.WriteLine($"\n******************************************************************");
+                    Console.WriteLine($"****************************************************************** \n");
 
                     bool addRemChoice = int.TryParse(Console.ReadLine(), out int addOrRemove);
 

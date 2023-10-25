@@ -25,6 +25,8 @@ namespace WebShop6_v2
             Console.WriteLine("Write the price of the new product and press enter:");
             newItemPrice = Console.ReadLine();
 
+            Console.Clear();
+
             Console.WriteLine("Write the description of the new product and press enter:");
             newItemDesc = Console.ReadLine();
 
@@ -60,7 +62,7 @@ namespace WebShop6_v2
 
         public static void editProduct()
         {
-            string editItem;
+            string editItem, newName, newPrice, newDesc;
             string[] productsListEdit = File.ReadAllLines("inventory.csv");
 
             Console.Clear();
@@ -71,15 +73,26 @@ namespace WebShop6_v2
                 Console.WriteLine(products[0] + " " + products[1]);
             }
 
-            Console.WriteLine("Choose a product to edit");
+            Console.WriteLine("Write the number corresponding with the item you want to edit");
             bool editChoice = int.TryParse(Console.ReadLine(), out int Edit);
             Edit = Edit - 1;
 
             List<string> editList = File.ReadAllLines("inventory.csv").ToList();
             string itemEdit = editList[Edit];
 
-            Console.WriteLine("The items new name and price:   ('Name,Price,Description')");
-            editItem = Console.ReadLine();
+            Console.WriteLine("Write the new name of the product");
+            newName = Console.ReadLine();
+            Console.Clear();
+
+            Console.WriteLine("Write the new price of the product");
+            newPrice = Console.ReadLine();
+            Console.Clear();
+
+            Console.WriteLine("Write the new description of the product");
+            newDesc = Console.ReadLine();
+            Console.Clear();
+
+            editItem = newName + "," + newPrice + "," + newDesc;
 
             editList[Edit] = editItem;
             File.WriteAllLines("inventory.csv", editList.ToArray());
