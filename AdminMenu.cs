@@ -2,12 +2,12 @@
 
 public class AdminMenu
 {
-    public static void Main(string username)
+    public static void Main(Admin admin)
     {
         Console.Clear();
         Console.WriteLine($"******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
-        Console.WriteLine(username + "! WELCOME to: The Admin menu\n");
+        Console.WriteLine(admin.Username + "! WELCOME to: The Admin menu\n");
         Console.WriteLine(" 1. Manage Customer Info");
         Console.WriteLine(" 2. Manage Products");
         Console.WriteLine(" 3. Manage Orders");
@@ -26,7 +26,7 @@ public class AdminMenu
 
                 case 1: //Manage Customer Info
                     CustomerManagement.Menu();
-                    Main(username);
+                    Main(admin);
                     break;
 
                 case 2: //Manage Products
@@ -116,7 +116,7 @@ public class AdminMenu
 
                             case 4:
 
-                                Main(username);
+                                Main(admin);
                                 break;
 
                         }
@@ -125,13 +125,13 @@ public class AdminMenu
                 break;
 
                 case 3: //Manage Orders
-                    Main(username);
+                    Main(admin);
                     break;
 
                 default: //ogiltig siffra matas in
                     Console.WriteLine(" Invalid choice. Try again!");
                     Thread.Sleep(1000);
-                    Main(username);
+                    Main(admin);
                     break;
             }
         }
@@ -139,7 +139,7 @@ public class AdminMenu
         {
             Console.WriteLine("Invalid input. Try again!");
             Thread.Sleep(1000);
-            Main(username);
+            Main(admin);
         }
 
     }
