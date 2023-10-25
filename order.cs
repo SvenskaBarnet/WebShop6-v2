@@ -93,6 +93,7 @@ class order
 
     static void PlaceOrder()
     {
+        
 
 
         DisplayProductList();
@@ -101,19 +102,21 @@ class order
 
         Product selectedProduct = products.FirstOrDefault(p => p.Id == productId);
 
-       if (selectedProduct == null)
+        if (selectedProduct == null) 
         {
             Console.WriteLine("Invalid product ID.");
             return;
         }
+        else
+        {
+            int totalAmount = selectedProduct.Price;
+            Console.WriteLine($"Total Amount: ${totalAmount}");
 
         
 
-        int totalAmount = selectedProduct.Price;
-        Console.WriteLine($"Total Amount: ${totalAmount}");
+        }
 
-        orders.Add(new Order(selectedProduct, totalAmount));
-        Console.WriteLine("Order placed successfully!");
+       
     }
 }
 // kom ihåg blir dubbelt
