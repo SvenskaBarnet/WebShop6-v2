@@ -125,10 +125,10 @@ public class AdminMenu
                         }
                     }
 
-                break;
+                    break;
 
                 case 3: //Manage Orders
-                    OrderManegment.Menu();
+                    OrderManegment.Menu(username);
                     Main(username);
                     break;
 
