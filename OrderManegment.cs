@@ -7,6 +7,8 @@ using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
+// Class for manage all Cart and Receipt 
+
 
 namespace WebShop6_v2
 {
@@ -14,6 +16,7 @@ namespace WebShop6_v2
     {
         public static void Menu(string username)
         {
+            // Main menu
             Console.Clear();
             Console.WriteLine($"******************************************************************");
             Console.WriteLine($"****************************************************************** \n");
@@ -28,14 +31,14 @@ namespace WebShop6_v2
             bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
             if (isSucceed)
             {
-                switch (choice)
+                switch (choice) 
                 {
-                    case 1:
+                    case 1: // Menu for checking ongoning Cart for customers
                         Console.WriteLine($"******************************************************************");
                         Console.WriteLine($"****************************************************************** \n");
                         Console.WriteLine("---                      Customers                             ----");
                         Console.WriteLine("         For what user do you want to see ongoing order");
-                        displayUsers();
+                        displayUsers(); 
                         Console.WriteLine();
                         Console.Write("enter user: ");
                         tempchoice = Console.ReadLine();
@@ -53,7 +56,7 @@ namespace WebShop6_v2
                         }
                         Menu(username);
                         break;
-                    case 2:
+                    case 2: // Menu for checking receipt for customers (order history)
                         Console.WriteLine($"******************************************************************");
                         Console.WriteLine($"****************************************************************** \n");
                         Console.WriteLine("---                      Customers                             ----");
@@ -75,7 +78,7 @@ namespace WebShop6_v2
                         }
                         Menu(username);
                         break;
-                    case 3:
+                    case 3: // did not complet this... unnecessary but could have been fun to display
                         Console.WriteLine("--- Customers ----");
                         displayUsers();
                         Console.WriteLine("$$$$");
@@ -99,6 +102,7 @@ namespace WebShop6_v2
             }
 
         }
+        // Like the name... getting users from users i Cart
         public static void displayUsers()
         {
             Console.WriteLine("------------------------------------------------------------------");
@@ -113,6 +117,7 @@ namespace WebShop6_v2
                 Console.WriteLine($"--->   {info[0]}");
             }
         }
+        // Like the name getting users cart (ongoing purches) Think that this will be empty when checkout
         public static void getUserCart(string choice)
         {
             Console.WriteLine($"******************************************************************");
@@ -144,11 +149,13 @@ namespace WebShop6_v2
                 totalsum = totalsum + price;
                 count++;
             }
+            //Just cosmetic
             Console.WriteLine("");
             Console.WriteLine($" - number of items: {count}\n");
             Console.WriteLine($" - total price:     {totalsum}$");
         }
 
+        // Like the name. Getting the all the receipt from users. Made it so it is collecting all receipt from users folder 
         public static void getReceipt(string choice)
         {
             Console.Clear();
@@ -181,6 +188,9 @@ namespace WebShop6_v2
                 return;
             }
         }
+        // A failsafe to check so input is a user that exist. Gets input from Console.ReadLine 
+        // in the menu and checks if the user is in the users.csv file. The user is added there
+        // when created. Used this for the recipt function also.
         public static bool userExist(string input)
         {
             string[] userlist = File.ReadAllLines("users.csv");
