@@ -65,55 +65,70 @@ public class LoginMenu
     }
     public static IUser? Login()
     {
-        Console.Clear();
-        Console.WriteLine("Enter you username and password, leave blank to return to previous menu\n");
-        string input = Utils.Promt("Username: ");
-        if (!input.Equals(string.Empty))
+        bool validInput;
+        do
         {
-            string[] users = File.ReadAllLines("users.csv");
-            foreach (string user in users)
+            validInput = true;
+            Console.Clear();
+            Console.WriteLine("Enter you username and password, leave blank to return to previous menu\n");
+            string input = Utils.Promt("Username: ");
+            if (!input.Equals(string.Empty))
             {
-                string[] info = user.Split(',');
-                if (info[0].Equals(input))
+                bool userExists = false;
+                string[] users = File.ReadAllLines("users.csv");
+                foreach (string user in users)
                 {
-                    input = MaskedPass();
-                    if (!input.Equals(string.Empty))
+                    string[] info = user.Split(',');
+                    if (info[0].Equals(input))
                     {
-                        if (info[1].Equals(input))
+                        userExists = true;
+                        input = MaskedPass();
+                        if (!input.Equals(string.Empty))
                         {
-                            if (Enum.TryParse(info[2], out Role role))
+                            if (info[1].Equals(input))
                             {
-                                switch (role)
+                                if (Enum.TryParse(info[2], out Role role))
                                 {
-                                    case Role.Admin:
-                                        return new Admin(info[0]);
-                                    case Role.Customer:
-                                        return new Customer(info[0], LoadCart(info[0]));
+                                    switch (role)
+                                    {
+                                        case Role.Admin:
+                                            return new Admin(info[0]);
+                                        case Role.Customer:
+                                            return new Customer(info[0], LoadCart(info[0]));
+                                        default:
+                                            Console.WriteLine("Invalid Role");
+                                            Thread.Sleep(1000);
+                                            throw new Exception();
+                                    }
+                                }
+                                else
+                                {
+                                    Console.WriteLine("\n\nCouldn't parse something.");
+                                    Thread.Sleep(1000);
+                                    throw new Exception();
                                 }
                             }
                             else
                             {
-                                Console.WriteLine("Couldn't parse something.");
-                                throw new Exception();
+                                Console.WriteLine("\n\nWrong Password, try again");
+                                Thread.Sleep(1000);
+                                validInput = false;
                             }
                         }
                         else
                         {
-                            Console.WriteLine("Wrong Password, try again");
-                            Thread.Sleep(1000);
-                            Login();
+                            return null;
                         }
                     }
-                    else
-                    {
-                        return null;
-                    }
+                }
+                if (!userExists)
+                {
+                    Console.WriteLine("\nUsername does not exist, try again");
+                    Thread.Sleep(1000);
+                    validInput = false;
                 }
             }
-            Console.WriteLine("Username does not exist, try again");
-            Thread.Sleep(1000);
-            Login();
-        }
+        } while (!validInput);
         return null;
     }
 
