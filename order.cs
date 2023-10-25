@@ -3,8 +3,22 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-class order
+namespace   WebShop6_v2;
+
+class Order
+
 {
+    public Product Product { get; }
+    public int Quantity { get; }
+    public int TotalAmount { get; }
+
+    public Order(Product product, int quantity, int totalAmount)
+    {
+        Product = product;
+        Quantity = quantity;
+        TotalAmount = totalAmount;
+    }
+
     static List<Product> products = new List<Product>();
     static List<Order> orders = new List<Order>();
 
@@ -117,33 +131,5 @@ class order
         }
 
        
-    }
-}
-// kom ihåg blir dubbelt
-class Product
-{
-    public int Id { get; }
-    public string Name { get; }
-    public int Price { get; }
-
-    public Product(int id, string name, int price)
-    {
-        Id = id;
-        Name = name;
-        Price = price;
-    }
-}
-
-class Order
-{
-    public Product Product { get; }
-    public int Quantity { get; }
-    public int TotalAmount { get; }
-
-    public Order(Product product, int quantity, int totalAmount)
-    {
-        Product = product;
-        Quantity = quantity;
-        TotalAmount = totalAmount;
     }
 }

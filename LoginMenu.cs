@@ -146,6 +146,8 @@ public class LoginMenu
         string[] savedCart = File.ReadAllLines($"Carts/{username}.csv");
         foreach (string product in savedCart)
         {
+            string[] info = product.Split(",");
+
             cart.Add(new Product(product));
         }
         return cart;
