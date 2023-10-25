@@ -62,6 +62,7 @@ public class LoginMenu
                 {
                     File.AppendAllText("users.csv", $"{username},{password},Customer{Environment.NewLine}");
                     File.Create($"Carts/{username}.csv").Close();
+                    Directory.CreateDirectory($"Orders/{username}/");
                     return;
                 }
             }
