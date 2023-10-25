@@ -29,12 +29,16 @@ public class AdminMenu
                     Main(admin);
                     break;
 
+                //case 2: //Manage products
+                //    break;
+
                 case 2: //Manage Products
                     ProductManagement.Menu();
                     Main(admin);
                     break;
 
                 case 3: //Manage Orders
+                    OrderManegment.Menu(admin.Username);
                     Main(admin);
                     break;
 
