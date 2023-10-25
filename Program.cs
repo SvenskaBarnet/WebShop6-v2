@@ -36,11 +36,11 @@ while (true)
                 user = LoginMenu.Login();
                 if (user is Customer customer)
                 {
-                    CustomerMenu.Main(customer.Username);
+                    CustomerMenu.Main(customer);
                 }
                 else if (user is Admin admin)
                 {
-                    AdminMenu.Main(admin.Username);
+                    AdminMenu.Main(admin);
                 }
                 continue;
 
