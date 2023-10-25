@@ -5,29 +5,32 @@ public class OrderHistory
     public static void View(Customer customer)
     {
         Console.Clear();
-        string[] orders = File.ReadAllLines($"Orders/{customer.Username}.csv");
-        Console.WriteLine("\n------------------------------------------------\n");
-        string? sum = null;
-        foreach (string line in orders)
+        string[] files = Directory.GetFiles($"Orders/{customer.Username}/");
+        foreach (string file in files)
         {
-            string[] info = line.Split(',');
-            if (Enum.TryParse(info[0], out RecieptTag recieptTag))
+            string[] orders = File.ReadAllLines(file);
+            Console.WriteLine("\n------------------------------------------------\n");
+            string? sum = null;
+            foreach (string line in orders)
             {
-                switch (recieptTag)
+                string[] info = line.Split(',');
+                if (Enum.TryParse(info[0], out RecieptTag recieptTag))
                 {
-                    case RecieptTag.Sum:
-                        sum = $"Total: {info[1]}:-";
-                        break;
-                    case RecieptTag.Timestamp:
-                        Console.WriteLine("{0,-31} {1,10}", sum, info[1]);
-                        Console.WriteLine("------------------------------------------------\n");
-                        break;
+                    switch (recieptTag)
+                    {
+                        case RecieptTag.Sum:
+                            sum = $"Total: {info[1]}:-";
+                            break;
+                        case RecieptTag.Timestamp:
+                            Console.WriteLine("\n{0,-32} {1,15}", info[1], sum);
+                            Console.WriteLine("\n------------------------------------------------\n");
+                            break;
+                        case RecieptTag.Product:
+                            string formattedProduct = string.Format("{0,-35} {1,10}:-\n", info[1], info[2]);
+                            Console.WriteLine($"{formattedProduct}");
+                            break;
+                    }
                 }
-            }
-            else
-            {
-                string formattedProduct = string.Format("{0,-35} {1,10}:-\n", info[0], info[1]);
-                Console.WriteLine($"{formattedProduct}");
             }
         }
         Console.WriteLine("\nPress any key to return to previous menu");

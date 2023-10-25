@@ -4,4 +4,5 @@ public enum RecieptTag
 {
     Sum,
     Timestamp,
+    Product,
 }
