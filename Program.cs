@@ -4,8 +4,8 @@ Files.Setup();
 
 while (true)
 {
+    Inventory.Printer();//loopar hela produktlistan för att göra en beräkning
     Console.Clear();
-    Inventory.Printer();
     Console.WriteLine($"******************************************************************");
     Console.WriteLine($"****************************************************************** \n");
     Console.WriteLine(" WELCOME to: The Time-travelling Feline Shop\n");
