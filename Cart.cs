@@ -51,8 +51,8 @@ public class Cart
             //checka om den finns med index
             if (myProduct != null)
             {
-               order.RemoveAt(choice - 1);
-               File.WriteAllLines($"Carts/{currentCustomer}.csv", ConvertOrderToStr());
+                order.RemoveAt(choice - 1);
+                File.WriteAllLines($"Carts/{currentCustomer}.csv", ConvertOrderToStr());
             }
             else
             {
@@ -75,10 +75,10 @@ public class Cart
     }
     public static void ShowOrder()
     {
-        order = new List<Product>(); //skapar en tom lista
+        order = new List<Product>(); //STARTAR alltid med en tom lista
         var currentOrder = LoginMenu.LoadCart(currentCustomer);
         int nr = 1;
-        foreach (var item in currentOrder) //loopa aktuella kund-ordern
+        foreach (var item in currentOrder)
         {
             Console.WriteLine($"{nr++}. {item.Name}, {item.Price};-");
             order.Add(item);
@@ -91,22 +91,37 @@ public class Cart
         Console.WriteLine($" Total =  {TotalPrice()} "); //anropa en beräkningsfunktion av totalsumman
         Console.WriteLine("1. Beställa");
         Console.WriteLine("2. Ta bort vara");
-        Console.WriteLine("Återvända [ENTER]");
-        var choice = Console.ReadLine();
-        switch (choice)
+        Console.WriteLine("0. Återvända");
+        bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
+        if (isSucceed)
         {
-            case "1":
-                ConfirmOrder();
-                break;
+            switch (choice)
+            {
+                case 0:
+                    CustomerMenu.Main(LoginMenu.LoggedInCustomer);
+                    break;
 
-            case "2":
-                EditCart();
-                break;
+                case 1:
+                    ConfirmOrder();
+                    break;
 
-            default://tillbaka menyval för kunden
-                CustomerMenu.Main(LoginMenu.LoggedInCustomer);
-                break;
+                case 2:
+                    EditCart();
+                    break;
 
+                default: //ogiltig siffra matas in
+                    Console.WriteLine(" Invalid choice. Try again!");
+                    Thread.Sleep(1000);
+                    CartMenu();
+                    break;
+            }
         }
+        else //ogiltig symbol matas in
+        {
+            Console.WriteLine("Invalid input. Try again!");
+            Thread.Sleep(1000);
+            CartMenu();
+        }
+
     }
 }

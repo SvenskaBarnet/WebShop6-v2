@@ -8,8 +8,6 @@ public class CustomerMenu
 {
     public static void Main(Customer customer)
     {
-        Cart.CartMenu();
-
         Console.Clear();
         Console.WriteLine($"******************************************************************");
         Console.WriteLine($"****************************************************************** \n");
