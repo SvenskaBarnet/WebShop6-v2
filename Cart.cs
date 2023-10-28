@@ -75,6 +75,7 @@ public class Cart
     }
     public static void ShowOrder()
     {
+        order = new List<Product>(); //skapar en tom lista
         var currentOrder = LoginMenu.LoadCart(currentCustomer);
         int nr = 1;
         foreach (var item in currentOrder) //loopa aktuella kund-ordern
