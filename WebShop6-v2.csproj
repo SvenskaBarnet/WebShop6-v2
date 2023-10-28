@@ -9,7 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="bin\Debug\net7.0\Carts\lilly - Copy.csv" />
     <None Include="bin\Debug\net7.0\Carts\lilly.csv" />
   </ItemGroup>
 

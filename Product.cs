@@ -16,7 +16,7 @@ public class Product
         }
         else
         {
-            throw new Exception();
+            Console.WriteLine("failed.");
         }
     }
 }

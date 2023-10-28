@@ -3,6 +3,8 @@ using System;
 using WebShop6_v2;
 using System.Linq;
 using System.Xml;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Collections.Generic;
 
 namespace WebShop6_v2;
 
@@ -11,38 +13,6 @@ public class Cart
     public static string currentCustomer = LoginMenu.LoggedInCustomer.Username;
 
     public static List<Product> order = new List<Product>();
-    public static void ShowOrder()//Visa innehållet av varukorgen
-    {
-        var currentOrder = LoginMenu.LoadCart(currentCustomer);
-        int nr = 1;
-        foreach (var item in currentOrder) //loopa aktuella kund-ordern
-        {
-            Console.WriteLine($"{nr++}. {item.Name}, {item.Price};-");
-            order.Add(item);
-        }
-
-    }
-    public static void ConfirmOrder()
-    {
-        List<string> currentOrder = ConvertOrderToStr();
-
-        bool notFirstTimeOrder = Directory.Exists($"Orders/{currentCustomer}");
-
-        //skapa en ny folder med deras username> order-folder> om användaren ej har redan en
-        if (!notFirstTimeOrder)
-        {
-            Directory.CreateDirectory($"Orders/{currentCustomer}");
-            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
-        }
-        //annars lägg kvitton under anävdarens-folder
-        //kvitto> = ny txt-fil
-        else
-        {
-            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
-        }
-        Console.WriteLine("Thank you for the purchased!");
-        Console.WriteLine("For order status, please check - Order History -");
-    }
 
     public static List<string> ConvertOrderToStr()
     {
@@ -53,27 +23,48 @@ public class Cart
         }
         return myList;
     }
+    public static void ConfirmOrder()
+    {
+        List<string> currentOrder = ConvertOrderToStr();
+        bool notFirstTimeOrder = Directory.Exists($"Orders/{currentCustomer}");
+
+        if (!notFirstTimeOrder)
+        {
+            Directory.CreateDirectory($"Orders/{currentCustomer}");
+            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
+            Console.WriteLine("Thank you for the purchased!");
+            Console.WriteLine("For order status, please check - Order History -");
+        }
+        else
+        {
+            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
+        }
+        Console.WriteLine("Thank you for the purchased!");
+        Console.WriteLine("For order status, please check - Order History -");
+    }
     public static void EditCart()
     {
         //låt användaren ange input> relevant nr till produkten
         if (int.TryParse(Console.ReadLine(), out int choice))
         {
+            var myProduct = order.ElementAtOrDefault(choice - 1);
             //checka om den finns med index
-            //if (order.ElementAtOrDefault()
-            //{
-              
-            //}
-
-            //om nr-val finns, ta bort
-            //var newList = list.slice(begin,end);
-            //list.RemoveAt(val av produkt)
-
-            //ogiltigt nr-val, låt användaren försöka igen
-            //felmeddelande + EditCart();
+            if (myProduct != null)
+            {
+               order.RemoveAt(choice - 1);
+               File.WriteAllLines($"Carts/{currentCustomer}.csv", ConvertOrderToStr());
+            }
+            else
+            {
+                Console.WriteLine(" Invalid choice. Try again!");
+                Thread.Sleep(1000);
+                EditCart();
+            }
         }
         else
         {
-            //ogiltigt symbol, gå tillbaka till cartmenu
+            Console.WriteLine("Invalid input. Try again!");
+            Thread.Sleep(1000);
             CartMenu();
         }
     }
@@ -82,7 +73,17 @@ public class Cart
         var totalprice = order.Select(product => product.Price).Sum();
         return totalprice;
     }
-    public static void CartMenu()//Visa totala beställning
+    public static void ShowOrder()
+    {
+        var currentOrder = LoginMenu.LoadCart(currentCustomer);
+        int nr = 1;
+        foreach (var item in currentOrder) //loopa aktuella kund-ordern
+        {
+            Console.WriteLine($"{nr++}. {item.Name}, {item.Price};-");
+            order.Add(item);
+        }
+    }
+    public static void CartMenu()
     {
         Console.Clear();
         ShowOrder();
