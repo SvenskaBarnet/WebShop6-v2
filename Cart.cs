@@ -1,48 +1,75 @@
 ﻿using System.Runtime.Remoting;
 using System;
 using WebShop6_v2;
+using System.Linq;
+using System.Xml;
+
 namespace WebShop6_v2;
 
-public static class Cart
+public class Cart
 {
+    public static string currentCustomer = LoginMenu.LoggedInCustomer.Username;
+
+    public static List<Product> order = new List<Product>();
     public static void ShowOrder()//Visa innehållet av varukorgen
     {
-        var currentOrder = LoginMenu.LoadCart(LoginMenu.CurrentCustomer.Username);
+        var currentOrder = LoginMenu.LoadCart(currentCustomer);
         int nr = 1;
         foreach (var item in currentOrder) //loopa aktuella kund-ordern
         {
             Console.WriteLine($"{nr++}. {item.Name}, {item.Price};-");
+            order.Add(item);
         }
 
     }
-
     public static void ConfirmOrder()
     {
+        List<string> currentOrder = ConvertOrderToStr();
+
+        bool notFirstTimeOrder = Directory.Exists($"Orders/{currentCustomer}");
+
         //skapa en ny folder med deras username> order-folder> om användaren ej har redan en
+        if (!notFirstTimeOrder)
+        {
+            Directory.CreateDirectory($"Orders/{currentCustomer}");
+            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
+        }
         //annars lägg kvitton under anävdarens-folder
         //kvitto> = ny txt-fil
-
+        else
+        {
+            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
+        }
+        Console.WriteLine("Thank you for the purchased!");
+        Console.WriteLine("For order status, please check - Order History -");
     }
 
+    public static List<string> ConvertOrderToStr()
+    {
+        List<string> myList = new List<string>();
+        foreach (var item in order)
+        {
+            myList.Add($"{item.Name}, {item.Price}, ");
+        }
+        return myList;
+    }
     public static void EditCart()
     {
-        ShowOrder();
         //låt användaren ange input> relevant nr till produkten
-        bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
-        //om nr-val finns, ta bort
-        if (isSucceed)
+        if (int.TryParse(Console.ReadLine(), out int choice))
         {
-            switch (choice)
-            {
-                case (choice  )
-                 //Lista.RemoveAt(val av produkt)
-                break;
+            //checka om den finns med index
+            //if (order.ElementAtOrDefault()
+            //{
+              
+            //}
 
-                default:
-                    //ogiltigt nr-val, låt användaren försöka igen
-                    EditCart();
-                    break;
-            }
+            //om nr-val finns, ta bort
+            //var newList = list.slice(begin,end);
+            //list.RemoveAt(val av produkt)
+
+            //ogiltigt nr-val, låt användaren försöka igen
+            //felmeddelande + EditCart();
         }
         else
         {
@@ -50,13 +77,11 @@ public static class Cart
             CartMenu();
         }
     }
-
     public static int TotalPrice()
     {
-        var totalprice = Inventory.products.Select(product => product.ProductPrice).Sum();
+        var totalprice = order.Select(product => product.Price).Sum();
         return totalprice;
     }
-
     public static void CartMenu()//Visa totala beställning
     {
         Console.Clear();
@@ -77,7 +102,7 @@ public static class Cart
                 break;
 
             default://tillbaka menyval för kunden
-                CustomerMenu.Main(LoginMenu.CurrentCustomer);
+                CustomerMenu.Main(LoginMenu.LoggedInCustomer);
                 break;
 
         }

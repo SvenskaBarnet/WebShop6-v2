@@ -5,7 +5,7 @@ namespace WebShop6_v2;
 public class LoginMenu
 {
     //public static string loggedInUser { get; set; }
-    public static Customer CurrentCustomer { get; set; }
+    public static Customer LoggedInCustomer { get; set; }
     public static void Register()
     {
         string? username;
@@ -112,8 +112,8 @@ public class LoginMenu
                                             return new Admin(info[0]);
 
                                         case Role.Customer:
-                                            CurrentCustomer = new Customer(info[0], LoadCart(info[0]));
-                                            return CurrentCustomer;
+                                            LoggedInCustomer = new Customer(info[0], LoadCart(info[0]));
+                                            return LoggedInCustomer;
 
                                         default:
                                             Console.WriteLine("Invalid Role");
