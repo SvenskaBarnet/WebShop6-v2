@@ -44,6 +44,8 @@ public class Cart
     }
     public static void EditCart()
     {
+        Console.Clear();
+        ShowOrder();
         //låt användaren ange input> relevant nr till produkten
         if (int.TryParse(Console.ReadLine(), out int choice))
         {
@@ -88,10 +90,10 @@ public class Cart
     {
         Console.Clear();
         ShowOrder();
-        Console.WriteLine($" Total =  {TotalPrice()} "); //anropa en beräkningsfunktion av totalsumman
-        Console.WriteLine("1. Beställa");
-        Console.WriteLine("2. Ta bort vara");
-        Console.WriteLine("0. Återvända");
+        Console.WriteLine($"\nTotal =  {TotalPrice()} CatCoins;- \n\n"); //anropa en beräkningsfunktion av totalsumman
+        Console.WriteLine("1. Order & Confirm");
+        Console.WriteLine("2. Remove A Product\n\n");
+        Console.WriteLine("0. Go Back");
         bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
         if (isSucceed)
         {

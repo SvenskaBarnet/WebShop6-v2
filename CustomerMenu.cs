@@ -28,6 +28,7 @@ public class CustomerMenu
                     return;
 
                 case 1: //Product List
+                    Catalogue.CatalogueMenu();
                     break;
 
                 case 2: //Order History
