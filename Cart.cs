@@ -11,8 +11,8 @@ namespace WebShop6_v2;
 public class Cart
 {
     public static string currentCustomer = LoginMenu.LoggedInCustomer.Username;
-
     public static List<Product> order = new List<Product>();
+    public static List<string> currentOrder = ConvertOrderToStr();
 
     public static List<string> ConvertOrderToStr()
     {
@@ -23,29 +23,38 @@ public class Cart
         }
         return myList;
     }
+    public static void ConfirmationMsg()
+    {
+        File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
+        Console.WriteLine($"\n\n******************************************************************");
+        Console.WriteLine(" Thank You For The Purchased!");
+        Console.WriteLine($"******************************************************************\n");
+        Console.WriteLine("---[To Check Order Status --> Order History]---");
+        Thread.Sleep(6000);
+        CustomerMenu.Main(LoginMenu.LoggedInCustomer);
+    }
     public static void ConfirmOrder()
     {
-        List<string> currentOrder = ConvertOrderToStr();
         bool notFirstTimeOrder = Directory.Exists($"Orders/{currentCustomer}");
 
         if (!notFirstTimeOrder)
         {
             Directory.CreateDirectory($"Orders/{currentCustomer}");
-            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
-            Console.WriteLine("Thank you for the purchased!");
-            Console.WriteLine("For order status, please check - Order History -");
+            ConfirmationMsg();
         }
         else
         {
-            File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
+            ConfirmationMsg();
         }
-        Console.WriteLine("Thank you for the purchased!");
-        Console.WriteLine("For order status, please check - Order History -");
     }
     public static void EditCart()
     {
         Console.Clear();
+        Console.WriteLine("\n-- Go Back: [ENTER] --\n\n");
         ShowOrder();
+        Console.WriteLine($"\n\n******************************************************************");
+        Console.WriteLine("TO REMOVE, please input the NR of the item");
+        Console.WriteLine($"******************************************************************\n");
         //låt användaren ange input> relevant nr till produkten
         if (int.TryParse(Console.ReadLine(), out int choice))
         {
@@ -55,6 +64,9 @@ public class Cart
             {
                 order.RemoveAt(choice - 1);
                 File.WriteAllLines($"Carts/{currentCustomer}.csv", ConvertOrderToStr());
+                Console.WriteLine("---[ ITEM REMOVED ]--");
+                Thread.Sleep(1000);
+                EditCart();
             }
             else
             {
@@ -65,8 +77,6 @@ public class Cart
         }
         else
         {
-            Console.WriteLine("Invalid input. Try again!");
-            Thread.Sleep(1000);
             CartMenu();
         }
     }
@@ -82,7 +92,7 @@ public class Cart
         int nr = 1;
         foreach (var item in currentOrder)
         {
-            Console.WriteLine($"{nr++}. {item.Name}, {item.Price};-");
+            Console.WriteLine($"{nr++}) {item.Name}, {item.Price};-");
             order.Add(item);
         }
     }
@@ -90,9 +100,9 @@ public class Cart
     {
         Console.Clear();
         ShowOrder();
-        Console.WriteLine($"\nTotal =  {TotalPrice()} CatCoins;- \n\n"); //anropa en beräkningsfunktion av totalsumman
+        Console.WriteLine($"\n~~~~~~[ TOTAL =  {TotalPrice()} CatCoins ]~~~~~~ \n\n"); //anropa en beräkningsfunktion av totalsumman
         Console.WriteLine("1. Order & Confirm");
-        Console.WriteLine("2. Remove A Product\n\n");
+        Console.WriteLine("2. Remove A Product\n");
         Console.WriteLine("0. Go Back");
         bool isSucceed = int.TryParse(Console.ReadLine(), out int choice);
         if (isSucceed)
