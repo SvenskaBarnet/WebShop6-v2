@@ -56,5 +56,19 @@ public class CustomerMenu
 
     public static void OrderHistoryMenu()
     {
+        var path = $"Orders/{Cart.currentCustomer}";
+        var fileNames = Directory.GetFiles(path);
+        foreach (var item in fileNames)
+        {
+        Console.WriteLine(item);
+        string[] orderHistory = File.ReadAllLines(item);
+            foreach (var line in orderHistory)
+            {
+                Console.WriteLine(line);
+            }
+            Console.WriteLine("-------");
+        }
+        Console.ReadKey();
+        CustomerMenu.Main(LoginMenu.LoggedInCustomer);
     }
 }

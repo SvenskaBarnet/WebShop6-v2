@@ -12,7 +12,6 @@ public class Cart
 {
     public static string currentCustomer = LoginMenu.LoggedInCustomer.Username;
     public static List<Product> order = new List<Product>();
-    public static List<string> currentOrder = ConvertOrderToStr();
 
     public static List<string> ConvertOrderToStr()
     {
@@ -23,14 +22,21 @@ public class Cart
         }
         return myList;
     }
+
+    public static void ClearCart()
+    {
+        order = new List<Product>();
+        File.WriteAllText($"Carts/{currentCustomer}.csv", string.Empty);
+    }
     public static void ConfirmationMsg()
     {
-        File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", currentOrder);
+        File.AppendAllLines($"Orders/{currentCustomer}/{DateTime.Now.Ticks}.txt", ConvertOrderToStr());
+        ClearCart();
         Console.WriteLine($"\n\n******************************************************************");
         Console.WriteLine(" Thank You For The Purchased!");
         Console.WriteLine($"******************************************************************\n");
         Console.WriteLine("---[To Check Order Status > Order History]---");
-        Thread.Sleep(6000);
+        Thread.Sleep(3000);
         CustomerMenu.Main(LoginMenu.LoggedInCustomer);
     }
     public static void ConfirmOrder()

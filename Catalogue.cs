@@ -21,7 +21,6 @@ namespace WebShop6_v2
                 {
                     var product = Inventory.ConvertToProduct(itemOfInventory);
                     Cart.order.Add(product);
-                    Console.WriteLine(Cart.order);
                     File.WriteAllLines($"Carts/{Cart.currentCustomer}.csv", Cart.ConvertOrderToStr());
                     Console.WriteLine("---[ ITEM ADDED ]--");
                     Thread.Sleep(1000);
