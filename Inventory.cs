@@ -31,4 +31,20 @@ public class Inventory
             }
         }
     }
+
+    public static List<Product> ConvertToProductList(List<Inventory> inventoryList)
+    {
+        var productList = new List<Product>();
+        //omvandla Inventory products till lista av produkter
+        foreach (var item in inventoryList)
+        {
+            var product = new Product(item.ProductName, item.ProductPrice);
+            productList.Add(product);
+        }
+        return productList;
+    }
+    public static Product ConvertToProduct(Inventory inventory)
+    {
+        return new Product(inventory.ProductName, inventory.ProductPrice);
+    }
 }

@@ -8,8 +8,6 @@ namespace WebShop6_v2
 {
     public static class Catalogue
     {
-        //public static List<Product> currentCart = Cart.order();
-        public static List <string> currentStrCart = Cart.ConvertOrderToStr();
         public static void AddProductToCart()
         {
             Console.Clear();
@@ -17,15 +15,28 @@ namespace WebShop6_v2
             ProductNameAndPrice();
             if (int.TryParse(Console.ReadLine(), out int choice))
             {
-                //var myProduct = currentCart.ElementAtOrDefault(choice--);
+                var itemOfInventory = Inventory.products.ElementAtOrDefault(choice-1);
 
-                //if (myProduct != null)
-                //{
-                //    Cart.order.Add(choice--);
-                //    File.AppendAllLines($"Carts/{Cart.currentCustomer}.csv", currentStrCart);
-                //    Console.WriteLine("---[ ITEM ADDED ]--");
-                //    Thread.Sleep(1000);
-                //}
+                if (itemOfInventory != null)
+                {
+                    var product = Inventory.ConvertToProduct(itemOfInventory);
+                    Cart.order.Add(product);
+                    Console.WriteLine(Cart.order);
+                    File.WriteAllLines($"Carts/{Cart.currentCustomer}.csv", Cart.ConvertOrderToStr());
+                    Console.WriteLine("---[ ITEM ADDED ]--");
+                    Thread.Sleep(1000);
+                    AddProductToCart();
+                }
+                else
+                {
+                    Console.WriteLine(" Invalid choice. Try again!");
+                    Thread.Sleep(1000);
+                    AddProductToCart();
+                }
+            }
+            else
+            {
+                CatalogueMenu();
             }
         }
 

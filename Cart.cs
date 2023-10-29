@@ -29,7 +29,7 @@ public class Cart
         Console.WriteLine($"\n\n******************************************************************");
         Console.WriteLine(" Thank You For The Purchased!");
         Console.WriteLine($"******************************************************************\n");
-        Console.WriteLine("---[To Check Order Status --> Order History]---");
+        Console.WriteLine("---[To Check Order Status > Order History]---");
         Thread.Sleep(6000);
         CustomerMenu.Main(LoginMenu.LoggedInCustomer);
     }

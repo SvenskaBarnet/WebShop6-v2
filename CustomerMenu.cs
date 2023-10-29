@@ -56,10 +56,5 @@ public class CustomerMenu
 
     public static void OrderHistoryMenu()
     {
-        var orderHistory = File.ReadAllLines($"Orders/{LoginMenu.LoggedInCustomer}");
-        foreach (var item in orderHistory)
-        {
-            Console.WriteLine(item);
-        }
     }
 }
