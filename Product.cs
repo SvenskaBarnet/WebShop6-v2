@@ -19,4 +19,10 @@ public class Product
             throw new Exception();
         }
     }
+
+    public Product(string Name, int Price)
+    {
+        this.Name = Name;
+        this.Price = Price;
+    }
 }

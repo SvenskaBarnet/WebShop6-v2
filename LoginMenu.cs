@@ -1,7 +1,11 @@
-﻿namespace WebShop6_v2;
+﻿using System;
+using WebShop6_v2;
+namespace WebShop6_v2;
 
 public class LoginMenu
 {
+    //public static string loggedInUser { get; set; }
+    public static Customer LoggedInCustomer { get; set; }
     public static void Register()
     {
         string? username;
@@ -63,6 +67,9 @@ public class LoginMenu
                     File.AppendAllText("users.csv", $"{username},{password},Customer{Environment.NewLine}");
                     File.Create($"Carts/{username}.csv").Close();
                     Directory.CreateDirectory($"Orders/{username}/");
+
+                    //loggedInUsername = username;
+
                     return;
                 }
             }
@@ -97,12 +104,17 @@ public class LoginMenu
                             {
                                 if (Enum.TryParse(info[2], out Role role))
                                 {
+                                    //loggedInUser = info[0];
+
                                     switch (role)
                                     {
                                         case Role.Admin:
                                             return new Admin(info[0]);
+
                                         case Role.Customer:
-                                            return new Customer(info[0], LoadCart(info[0]));
+                                            LoggedInCustomer = new Customer(info[0], LoadCart(info[0]));
+                                            return LoggedInCustomer;
+
                                         default:
                                             Console.WriteLine("Invalid Role");
                                             Thread.Sleep(1000);

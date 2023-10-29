@@ -1,8 +1,10 @@
 ﻿using WebShop6_v2;
 
 Files.Setup();
+
 while (true)
 {
+    Inventory.Printer();//loopar hela produktlistan för att göra en beräkning
     Console.Clear();
     Console.WriteLine($"******************************************************************");
     Console.WriteLine($"****************************************************************** \n");
